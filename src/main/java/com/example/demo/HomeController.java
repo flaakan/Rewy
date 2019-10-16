@@ -21,7 +21,9 @@ public class HomeController {
     
     @RequestMapping("/")
     public Movie home(){
-        userService.createUser();
+        userService.registerUser(new User("Faker","Fakerfaker"));
+        userService.deleteUser(2);
+        userService.updateUserName(3,"SaikatTheFeeder");
         movieService.addMovie();
         return movieService.getMovie();
       //  return "welcome to Rewy";

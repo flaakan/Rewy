@@ -17,18 +17,8 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
     
-    @Override
-    public void createUser() {
-        userRepository.save(new User("Flakan","lösenord"));
-    }
-
-    @Override
-    public void deleteUser(User user){
-        userRepository.delete(user);
-
-    }
-
-    @Override
+    
+        @Override
     public void registerUser(User user) {
         List<User> allUsers = getAllUsers();
         
@@ -38,6 +28,21 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
+    @Override
+    public void deleteUser(long userid){
+        User userToDelete = userRepository.getOne(userid);
+        userRepository.delete(userToDelete);
+
+    }
+    
+    public void updateUserName(long userid,String name){
+        User userToUpdate = userRepository.getOne(userid);
+        userToUpdate.setUsername(name);
+        userRepository.save(userToUpdate);
+    }
+
+
 
     @Override
     public List<User> getAllUsers() {

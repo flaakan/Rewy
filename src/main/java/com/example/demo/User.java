@@ -1,11 +1,14 @@
 package com.example.demo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 @Entity
 public class User {
@@ -17,7 +20,9 @@ public class User {
 
     private String username;
     private String password;
-    private Date created;
+    
+    @Column(name = "created")
+    private String created;
 
     // Empty constructor for JSON/JPA
     public User() {
@@ -28,6 +33,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        setCreated();
     }
 
     public Long getId() {
@@ -50,12 +56,14 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreated() {
+        Date dt = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.created = sdf.format(dt);
     }
 
 }

@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface UserService {
     
-    void createUser();
-    void deleteUser(User user);
+    void deleteUser(long userid);
     void registerUser(User user);
+    void updateUserName(long userid,String name);
     List<User> getAllUsers();
     
 }
