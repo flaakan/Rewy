@@ -12,18 +12,18 @@ public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Admin_ID", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "user_id")
-    private long userid;
+    @OneToOne
+    private User user;
 
     public Admin() {
 
     }
-
-    public Admin(long userid) {
-        this.userid = userid;
+    
+    public Admin(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -34,12 +34,12 @@ public class Admin {
         this.id = id;
     }
 
-    public long getUserId() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser(long userid) {
-        this.userid = userid;
+    public void setUserId(User user) {
+        this.user = user;
     }
 
 }

@@ -7,32 +7,54 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    
-    AdminRepository  adminRepository;
-    
+    AdminRepository adminRepository;
+
     @Autowired
-    public AdminServiceImpl(final AdminRepository  adminRepository) {
+    public AdminServiceImpl(final AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
-    }    
+    }
+
+    @Override
+    public Admin getAdminByUserId(long userid) {
+        List<Admin> allAdmins = adminRepository.findAll();
+        for (Admin a : allAdmins) {
+            if (a.getUser().getId() == userid) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public boolean checkIfAdmin(long userid) {
         List<Admin> admins = adminRepository.findAll();
-        for(Admin a: admins){
-            if(a.getUserId() == userid){
+        for (Admin a : admins) {
+            if (a.getUser().getId() == userid) {
                 return true;
             }
-            
         }
         return false;
     }
 
     @Override
-    public void updateToAdmin(long userid) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void createAdmin(User user) {
+        List<Admin> allAdmins = adminRepository.findAll();
+        int counter = 0;
+        for(Admin a : allAdmins){
+            if(a.getUser().getId() == user.getId()){
+                counter++;
+            }
+        }
+        if(counter ==0){
+            adminRepository.save(new Admin(user));
+        }
     }
 
     @Override
-    public void deleteAdmin(long userid) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteAdmin(User user) {
+        Admin adminToDelete = getAdminByUserId(user.getId());
+        adminRepository.delete(adminToDelete);
+
     }
 
 }
