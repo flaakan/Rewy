@@ -1,14 +1,12 @@
-package com.example.demo;
+package com.example.demo.Repository;
+
+import com.example.demo.Entites.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author Johnn
- */
 @Transactional
 @Repository
-public interface MovieRepository extends JpaRepository<Movie,Long> {
+public interface VoteRepository extends JpaRepository<Vote,Long> {
     
 }

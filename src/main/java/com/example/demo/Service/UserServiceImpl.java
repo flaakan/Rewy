@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.Service;
 
+import com.example.demo.Entites.User;
+import com.example.demo.Repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,13 +87,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean CheckUser(String username) {
-        List<User> allUsers = userRepository.findAll();
-        for (User u : allUsers) {
-            if (username.equalsIgnoreCase(u.getUsername())) {
-                return true;
-            }
-        }
-        return false;
+        User user = userRepository.findUserByUsername(username);
+        return user != null;
     }
 
     /**
@@ -123,4 +120,6 @@ public class UserServiceImpl implements UserService {
         return allUsers;
     }
 
+    
+    
 }

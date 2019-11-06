@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.Service;
 
+import com.example.demo.Entites.Movie;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional

@@ -1,4 +1,10 @@
-package com.example.demo;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+*/
+
+package com.example.demo.Entites;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,23 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Admin {
-
+public class Vote {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long id;
-
-    @OneToOne
-    private User user;
-
-    public Admin() {
-
-    }
     
-    public Admin(User user) {
-        this.user = user;
-    }
+    @OneToOne
+    User user;
 
     public Long getId() {
         return id;
@@ -38,8 +36,9 @@ public class Admin {
         return user;
     }
 
-    public void setUserId(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
-
+    
+    
 }

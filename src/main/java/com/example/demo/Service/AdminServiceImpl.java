@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.Service;
 
+import com.example.demo.Repository.AdminRepository;
+import com.example.demo.Entites.User;
+import com.example.demo.Entites.Admin;
+import com.example.demo.Repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,21 +12,18 @@ import org.springframework.stereotype.Service;
 public class AdminServiceImpl implements AdminService {
 
     AdminRepository adminRepository;
+    UserRepository userRepository;
 
     @Autowired
-    public AdminServiceImpl(final AdminRepository adminRepository) {
+    public AdminServiceImpl(final AdminRepository adminRepository, UserRepository userRepository) {
         this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Admin getAdminByUserId(long userid) {
-        List<Admin> allAdmins = adminRepository.findAll();
-        for (Admin a : allAdmins) {
-            if (a.getUser().getId() == userid) {
-                return a;
-            }
-        }
-        return null;
+        return adminRepository.getAdminByUserId(userid);
+
     }
 
     @Override
@@ -54,7 +55,6 @@ public class AdminServiceImpl implements AdminService {
     public void deleteAdmin(User user) {
         Admin adminToDelete = getAdminByUserId(user.getId());
         adminRepository.delete(adminToDelete);
-
+        userRepository.delete(user);
     }
-
 }
