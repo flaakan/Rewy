@@ -13,7 +13,7 @@ public class AdminServiceImpl implements AdminService {
 
     AdminRepository adminRepository;
     UserRepository userRepository;
-
+    
     @Autowired
     public AdminServiceImpl(final AdminRepository adminRepository, UserRepository userRepository) {
         this.adminRepository = adminRepository;
@@ -28,12 +28,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean checkIfAdmin(long userid) {
-        List<Admin> admins = adminRepository.findAll();
-        for (Admin a : admins) {
-            if (a.getUser().getId() == userid) {
-                return true;
-            }
-        }
+        if(getAdminByUserId(userid)!=null){
+            return true;
+    }
         return false;
     }
 

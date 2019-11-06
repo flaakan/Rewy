@@ -10,8 +10,9 @@ public interface UserService {
     
     User getOneUser(long userid);
     void deleteUser(long userid);
+    void deleteUserByUsername(String username);
     User registerUser(User user);
-    void updateUserName(long userid,String name);
+    void updateUserName(long userid, String username);
     boolean CheckUser(String username);
     User getLoginUser(User user);
     List<User> getAllUsers();

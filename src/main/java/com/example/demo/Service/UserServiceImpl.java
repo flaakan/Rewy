@@ -16,20 +16,18 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
-    
-    public void setUser(User user){
+
+    public void setUser(User user) {
         this.user = user;
     }
-    
-    public User getUser(){
+
+    public User getUser() {
         return user;
     }
 
     /**
      *
-     * @param userid
-     * Fetches an User by the userid.
+     * @param userid Fetches an User by the userid.
      * @return User
      */
     @Override
@@ -39,9 +37,8 @@ public class UserServiceImpl implements UserService {
 
     /**
      *
-     * @param user
-     * Uses the method CheckUser and if the user
-     * is not in the database, adds the user.
+     * @param user Uses the method CheckUser and if the user is not in the
+     * database, adds the user.
      * @return
      */
     @Override
@@ -55,8 +52,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      *
-     * @param userid
-     * Deletes a user by their user id.
+     * @param userid Deletes a user by their user id.
      */
     @Override
     public void deleteUser(long userid) {
@@ -64,25 +60,30 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(userToDelete);
 
     }
+    // Kan vara lättare att använda den här senare?
+        @Override
+    public void deleteUserByUsername(String username) {
+        User userToDelete = userRepository.findUserByUsername(username);
+        userRepository.delete(userToDelete);
+    }
 
     /**
      *
      * @param userid
      * @param name
-     * 
+     *
      * Updates the username with param name, on the user with param userid.
      */
     @Override
-    public void updateUserName(long userid, String name) {
+    public void updateUserName(long userid, String username) {
         User userToUpdate = userRepository.getOne(userid);
-        userToUpdate.setUsername(name);
+        userToUpdate.setUsername(username);
         userRepository.save(userToUpdate);
     }
 
     /**
      *
-     * @param username
-     * Checks if the username exists in the database.
+     * @param username Checks if the username exists in the database.
      * @return boolean
      */
     @Override
@@ -93,25 +94,36 @@ public class UserServiceImpl implements UserService {
 
     /**
      *
-     * @param user
-     * Gets an User and checks if the username and password matches,
+     * @param user Gets an User and checks if the username and password matches,
      * if it does returns this User.
      * @return User
      */
     @Override
     public User getLoginUser(User user) {
+        /*
         List<User> users = getAllUsers();
         for(User u : users){
             if(u.getUsername().equalsIgnoreCase(user.getUsername())&& u.getPassword().equals(user.getPassword())){
                 setUser(user);
                 return user;
             }        
+        }*/
+
+        // Den här borde vara bättre eftersom den letar bara efter en o inte hela listan av users
+        // Den checkar om lösenordet matchar om det finns en user o skickar tillbaka usern från databasen.
+        User DBuser = userRepository.findUserByUsername(user.getUsername());
+        if (DBuser != null) {
+            if (DBuser.getPassword().equals(user.getPassword())) {
+                setUser(DBuser);
+                return DBuser;
+            }
         }
         return new User();
     }
 
     /**
      * Fetches all existing users in the database.
+     *
      * @return List<User>
      */
     @Override
@@ -120,6 +132,6 @@ public class UserServiceImpl implements UserService {
         return allUsers;
     }
 
-    
-    
+
+
 }
