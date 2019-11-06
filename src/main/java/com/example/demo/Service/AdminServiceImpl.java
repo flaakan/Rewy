@@ -28,30 +28,24 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean checkIfAdmin(long userid) {
-        if(getAdminByUserId(userid)!=null){
-            return true;
-    }
-        return false;
+        return getAdminByUserId(userid)!=null;
     }
 
     @Override
     public void createAdmin(User user) {
-        List<Admin> allAdmins = adminRepository.findAll();
-        int counter = 0;
-        for(Admin a : allAdmins){
-            if(a.getUser().getId() == user.getId()){
-                counter++;
-            }
-        }
-        if(counter ==0){
-            adminRepository.save(new Admin(user));
-        }
+        if(getAdminByUserId(user.getId()) == null){
+            adminRepository.save(new Admin(user)); 
+         }
+        
     }
 
     @Override
     public void deleteAdmin(User user) {
-        Admin adminToDelete = getAdminByUserId(user.getId());
+       Admin adminToDelete = getAdminByUserId(user.getId());
+       if(adminToDelete != null){
         adminRepository.delete(adminToDelete);
         userRepository.delete(user);
+       }
+        
     }
 }
