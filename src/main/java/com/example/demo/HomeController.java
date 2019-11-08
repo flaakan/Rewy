@@ -1,10 +1,16 @@
 package com.example.demo;
 
 import com.example.demo.Entites.Admin;
+import com.example.demo.Entites.Review;
 import com.example.demo.Service.UserService;
 import com.example.demo.Service.AdminService;
 import com.example.demo.Service.MovieService;
 import com.example.demo.Entites.User;
+import com.example.demo.Entites.ReviewVote;
+import com.example.demo.Entites.Vote;
+import com.example.demo.Service.ReviewService;
+import com.example.demo.Service.ReviewVoteService;
+import com.example.demo.Service.VoteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +26,19 @@ public class HomeController {
     private final UserService userService;
     private final MovieService movieService;
     private final AdminService adminService;
+    private final ReviewVoteService reviewVoteService;
+    private final VoteService voteService;
+    private final ReviewService reviewService;
     
     @Autowired
-    public HomeController(UserService userService,MovieService movieService,AdminService adminService){
+    public HomeController(UserService userService,MovieService movieService,AdminService adminService,
+            ReviewVoteService reviewVoteService,ReviewService reviewService, VoteService voteService){
         this.userService = userService;
         this.movieService = movieService;
         this.adminService = adminService;
+        this.reviewVoteService = reviewVoteService;
+        this.voteService = voteService;
+        this.reviewService = reviewService;
     }
     
     @RequestMapping("/")
@@ -47,6 +60,38 @@ public class HomeController {
     public String AdminDelete(){
         adminService.deleteAdmin(userService.getOneUser(1));
         return "admin deleted";
+    }
+    @RequestMapping("/allvotes")
+    public List<Vote> allvotes(){
+     return voteService.getAllVotes();
+    }
+    
+    @RequestMapping("/allreviews")
+    public List<Review> allreviews(){
+    System.out.println("hello from homecontroller");
+
+     return reviewService.getAllReviews();
+    }
+    
+    @RequestMapping("/addreviewvote")
+    public String addreviewvote(){
+        Review review = reviewService.getreview2(2);
+        System.out.println(review.toString());
+        Vote vote  = voteService.getVote(3);
+        System.out.println(vote.toString());
+        ReviewVote rv = new ReviewVote();
+        rv.setReview(review);
+        rv.setVote(vote);
+        reviewVoteService.addReviewVote(rv);
+        
+        return "added reviewvote";
+    }
+    
+    
+    @RequestMapping("/allreviewvotes")
+    public List<ReviewVote> allreviewVotes(){
+        System.out.println(reviewVoteService.getAllReviewVotes());
+        return reviewVoteService.getAllReviewVotes();
     }
     
     @RequestMapping("/registration")

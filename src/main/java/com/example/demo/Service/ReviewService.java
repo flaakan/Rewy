@@ -11,4 +11,7 @@ public interface ReviewService {
     
     List<Review> getAllReviewsForMovie(Movie movie);
     List<Review> getAllReviewsForUser(User user);
+    List<Review>getAllReviews();
+    void addReview(Review review);
+    Review getreview2(long id);
 }
