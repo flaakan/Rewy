@@ -42,6 +42,10 @@ public class HomeController {
             return "welcome to Rewy";
         
     }
+    @RequestMapping("/user")
+    public User getUser(){
+        return userService.getUserByUsername("Flakan");
+    }
     
     @RequestMapping("/admindelete")
     public String AdminDelete(){

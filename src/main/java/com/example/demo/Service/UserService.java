@@ -16,6 +16,7 @@ public interface UserService {
     boolean CheckUser(String username);
     User getLoginUser(User user);
     List<User> getAllUsers();
+    User getUserByUsername(String username);
     
     
 }
