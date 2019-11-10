@@ -53,8 +53,16 @@ public class HomeController {
      if(adminService.checkIfAdmin(userService.findUserById(1).getId()))
             return "User is admin";
        else
-            return "welcome to Rewy";
-          }
+            return "welcome to Rewy";      
+    }
+  
+    @RequestMapping("/user")
+    public User getUser(){
+        return userService.getUserByUsername("Flakan");
+    }
+
+    
+
     
     @RequestMapping("/admindelete")
     public String AdminDelete(){
