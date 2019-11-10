@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.Entites.Admin;
+import com.example.demo.Entites.Movie;
 import com.example.demo.Entites.Review;
 import com.example.demo.Service.UserService;
 import com.example.demo.Service.AdminService;
@@ -48,17 +49,16 @@ public class HomeController {
         userService.registerUser(new User("Dsadad","123123123"));
         userService.updateUserName(3,"SaikatTheFeeder");
         movieService.addMovie();
-        adminService.createAdmin(userService.getOneUser(3));
-       if(adminService.checkIfAdmin(userService.getOneUser(1).getId()))
+        adminService.createAdmin(userService.findUserById(3));
+     if(adminService.checkIfAdmin(userService.findUserById(1).getId()))
             return "User is admin";
        else
             return "welcome to Rewy";
-        
-    }
+          }
     
     @RequestMapping("/admindelete")
     public String AdminDelete(){
-        adminService.deleteAdmin(userService.getOneUser(1));
+        adminService.deleteAdmin(userService.findUserById(1));
         return "admin deleted";
     }
     @RequestMapping("/allvotes")
@@ -75,9 +75,9 @@ public class HomeController {
     
     @RequestMapping("/addreviewvote")
     public String addreviewvote(){
-        Review review = reviewService.getreview2(2);
+        Review review = reviewService.findReviewById(2);
         System.out.println(review.toString());
-        Vote vote  = voteService.getVote(3);
+        Vote vote  = voteService.findVoteById(3);
         System.out.println(vote.toString());
         ReviewVote rv = new ReviewVote();
         rv.setReview(review);
@@ -87,6 +87,10 @@ public class HomeController {
         return "added reviewvote";
     }
     
+    @RequestMapping("/User")
+    public User getUser(){
+        return userService.findUserById(1);
+    }
     
     @RequestMapping("/allreviewvotes")
     public List<ReviewVote> allreviewVotes(){
@@ -119,5 +123,8 @@ public class HomeController {
     public Admin getadmin(){
         return adminService.getAdminByUserId(1);
     }
-    
+    @RequestMapping("/movie")
+    public Movie movie(){
+        return movieService.findMovieById(1);
+    }
 }

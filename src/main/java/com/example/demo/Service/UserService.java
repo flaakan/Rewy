@@ -2,13 +2,14 @@ package com.example.demo.Service;
 
 import com.example.demo.Entites.User;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Transactional
 public interface UserService {
     
-    User getOneUser(long userid);
+    User findUserById(long userid);
     void deleteUser(long userid);
     void deleteUserByUsername(String username);
     User registerUser(User user);

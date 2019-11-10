@@ -8,6 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MovieService {
     
     void addMovie();
-    Movie getMovie(long movieid);
+    Movie findMovieById(long movieid);
     List<Movie> getAllMovies();
 }
