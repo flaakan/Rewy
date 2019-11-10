@@ -18,11 +18,11 @@ public class MovieServiceImpl implements MovieService{
     
     @Override
    public void addMovie(){
-       movieRepository.save(new Movie("Kill Bill","About killing bill"));
+       movieRepository.save(new Movie("Kill Bill","About killing bill"));       
    }
     @Override
-    public Movie getMovie(long movieid){        
-        return movieRepository.getOne(movieid);
+    public Movie findMovieById(long movieid){        
+        return movieRepository.findMovieById(movieid);
     }
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();

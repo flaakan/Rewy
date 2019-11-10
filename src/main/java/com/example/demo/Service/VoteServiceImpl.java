@@ -27,8 +27,8 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Vote getVote(long id) {
-        return voteRepository.getOne(id);
+    public Vote findVoteById(long voteid) {
+        return voteRepository.findVoteById(voteid);
     }
 
     
