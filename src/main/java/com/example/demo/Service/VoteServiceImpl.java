@@ -31,5 +31,10 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.findVoteById(voteid);
     }
 
+    @Override
+    public Vote findVoteByVoteType(int votetype) {
+        return voteRepository.findVoteById(votetype);
+    }
+
     
 }

@@ -10,6 +10,6 @@ public interface VoteService {
     
     List<Vote> getAllVotes();
     void addVote(Vote vote);
-    Vote getVote(long id);
- 
+    Vote findVoteById(long voteid);
+    Vote findVoteByVoteType(int votetype);
 }
