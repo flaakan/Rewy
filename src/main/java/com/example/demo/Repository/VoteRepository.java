@@ -15,5 +15,10 @@ public interface VoteRepository extends JpaRepository<Vote,Long> {
     @Query("from Vote where user_id = ?1")
     List<Vote> GetAllVotesForUser(long userid);
     
+    @Query("from Vote where id = ?1")
+    Vote findVoteById(long voteid);
+    
+    @Query("from Vote where votetype = ?1")
+    Vote findVoteByVoteType(int votetype);
     
 }
