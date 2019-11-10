@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -21,9 +22,20 @@ public class Vote {
     @Column(updatable = false, nullable = false)
     private Long id;
     
+    // 1 = Upvote,  0 = no Vote,   -1 = Downvote?
+    private int voteType;
+    
     @OneToOne
+    @JoinColumn(name ="user_id" ,referencedColumnName = "id")
     User user;
 
+    public Vote() {
+        this.voteType = 0;
+    }
+
+    
+    
+    
     public Long getId() {
         return id;
     }
@@ -38,6 +50,14 @@ public class Vote {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getVoteType() {
+        return voteType;
+    }
+
+    public void setVoteType(int voteType) {
+        this.voteType = voteType;
     }
     
     
