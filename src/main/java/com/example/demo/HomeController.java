@@ -55,14 +55,6 @@ public class HomeController {
        else
             return "welcome to Rewy";      
     }
-  
-    @RequestMapping("/user")
-    public User getUser(){
-        return userService.getUserByUsername("Flakan");
-    }
-
-    
-
     
     @RequestMapping("/admindelete")
     public String AdminDelete(){
@@ -95,7 +87,7 @@ public class HomeController {
         return "added reviewvote";
     }
     
-    @RequestMapping("/User")
+    @RequestMapping("/user")
     public User getUser(){
         return userService.findUserById(1);
     }
