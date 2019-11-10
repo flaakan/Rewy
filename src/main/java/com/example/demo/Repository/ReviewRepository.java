@@ -18,9 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
+    // Gets all reviews for an User
     @Query("from Review where user_id = ?1")
     List<Review> getAllReviewsByUserId(long userid);
 
+    // Gets all reviews for a Movie
     @Query("from Review where movie_id = ?1")
     List<Review> getAllReviewsByMovieId(long movieid);
 
