@@ -25,5 +25,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     // Gets all reviews for a Movie
     @Query("from Review where movie_id = ?1")
     List<Review> getAllReviewsByMovieId(long movieid);
+    
+    @Query("from Review where id = ?1")
+    Review findReviewById(long reviewid);
+
 
 }
