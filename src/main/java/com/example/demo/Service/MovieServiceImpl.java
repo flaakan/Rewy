@@ -1,6 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entites.Movie;
+import com.example.demo.Entites.Moviedetails;
 import com.example.demo.Repository.MovieRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ public class MovieServiceImpl implements MovieService{
     
     @Override
    public void addMovie(){
-       movieRepository.save(new Movie("Kill Bill","About killing bill"));       
+       movieRepository.save(new Moviedetails("Kill Bill","About killing bill"));       
    }
     @Override
-    public Movie findMovieById(long movieid){        
+    public Moviedetails findMovieById(long movieid){        
         return movieRepository.findMovieById(movieid);
     }
-    public List<Movie> getAllMovies(){
+    public List<Moviedetails> getAllMovies(){
         return movieRepository.findAll();
     }
     

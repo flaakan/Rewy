@@ -5,7 +5,7 @@
  */
 package com.example.demo.Repository;
 
-import com.example.demo.Entites.Movie;
+import com.example.demo.Entites.Moviedetails;
 import com.example.demo.Entites.Review;
 import java.util.ArrayList;
 import java.util.List;
