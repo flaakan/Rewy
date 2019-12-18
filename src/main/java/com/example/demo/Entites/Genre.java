@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Review {
+public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +19,18 @@ public class Review {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToOne
-    @JoinColumn(name ="movie_id" ,referencedColumnName = "id")
-    private Moviedetails movie;
-
-    //Måste disskutera hur vi gör med votes. 
+    @JoinColumn(name ="moviedetails_id" ,referencedColumnName = "id")
+    private Moviedetails moviedetails;
     
+    private String name;
+
+    public Genre (){
+    }
     
-    private String reviewText;
+    public Genre(Moviedetails movie, String genreName) {
+        this.moviedetails = movie;
+        this.name = genreName;
+    }
 
     public Long getId() {
         return id;
@@ -39,28 +40,21 @@ public class Review {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Moviedetails getMovie() {
-        return movie;
+        return moviedetails;
     }
 
     public void setMovie(Moviedetails movie) {
-        this.movie = movie;
+        this.moviedetails = movie;
     }
 
-    public String getReviewText() {
-        return reviewText;
+    public String getName () {
+        return name;
     }
 
-    public void setReviewText(String reviewText) {
-        this.reviewText = reviewText;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

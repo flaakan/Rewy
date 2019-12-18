@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 
 @Entity
-public class Movie {
+public class Moviedetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,12 +16,12 @@ public class Movie {
     private Long id;
     private String name;
     private String description;
-    private float rating;
+    private float rating;  
     
-    public Movie(){
+    public Moviedetails(){
         
     }
-    public Movie(String name,String description){
+    public Moviedetails(String name,String description){
         this.name = name;
         this.description = description;
     }
