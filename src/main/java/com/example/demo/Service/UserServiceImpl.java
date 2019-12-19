@@ -102,17 +102,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getLoginUser(User user) {
-        /*
-        List<User> users = getAllUsers();
-        for(User u : users){
-            if(u.getUsername().equalsIgnoreCase(user.getUsername())&& u.getPassword().equals(user.getPassword())){
-                setUser(user);
-                return user;
-            }        
-        }*/
-
-        // Den här borde vara bättre eftersom den letar bara efter en o inte hela listan av users
-        // Den checkar om lösenordet matchar om det finns en user o skickar tillbaka usern från databasen.
         User DBuser = userRepository.findUserByUsername(user.getUsername());
         if (DBuser != null) {
             if (DBuser.getPassword().equals(user.getPassword())) {

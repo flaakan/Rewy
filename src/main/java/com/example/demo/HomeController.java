@@ -17,6 +17,7 @@ import com.example.demo.Service.VoteService;
 import com.example.demo.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class HomeController {
 
@@ -104,7 +105,7 @@ public class HomeController {
     }
 
     @RequestMapping("/user")
-    public User getUser() {
+    public Optional<User> getUser() {
         return userService.findUserById(1);
     }
 

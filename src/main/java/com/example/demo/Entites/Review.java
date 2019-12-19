@@ -23,7 +23,7 @@ public class Review {
     private User user;
 
     @OneToOne
-    @JoinColumn(name ="movie_id" ,referencedColumnName = "id")
+    @JoinColumn(name ="moviedetails_id" ,referencedColumnName = "id")
     private Moviedetails movie;
 
     //Måste disskutera hur vi gör med votes. 
