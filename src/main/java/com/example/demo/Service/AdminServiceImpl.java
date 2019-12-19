@@ -5,6 +5,7 @@ import com.example.demo.Entites.User;
 import com.example.demo.Entites.Admin;
 import com.example.demo.Repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,11 +41,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAdmin(User user) {
-       Admin adminToDelete = getAdminByUserId(user.getId());
+    public void deleteAdmin(Optional <User> user) {
+       Admin adminToDelete = getAdminByUserId(user.get().getId());
        if(adminToDelete != null){
         adminRepository.delete(adminToDelete);
-        userRepository.delete(user);
+        userRepository.delete(user.get());
        }
         
     }

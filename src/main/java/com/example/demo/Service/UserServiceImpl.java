@@ -3,6 +3,7 @@ package com.example.demo.Service;
 import com.example.demo.Entites.User;
 import com.example.demo.Repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,10 @@ public class UserServiceImpl implements UserService {
      * @return User
      */
     @Override
-    public User findUserById(long userid) {
-        return userRepository.findUserById(userid);
+    public Optional<User> findUserById(long userid) {
+        return userRepository.findById(userid);
     }
+    
 
     /**
      *

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface UserService {
     
-    User findUserById(long userid);
+    Optional <User> findUserById(long userid);
     void deleteUser(long userid);
     void deleteUserByUsername(String username);
     User registerUser(User user);
