@@ -15,20 +15,26 @@ user_id int unsigned not null,
 foreign key(user_id) references user(id)
 );
 
-create table movie(
+create table moviedetails(
 id int unsigned not null auto_increment primary key,
 name varchar(45),
 description varchar (300),
 rating double default 0
+);
+create table genre(
+id int unsigned not null auto_increment primary key,
+name varchar(45),
+moviedetails_id int unsigned not null,
+foreign key(moviedetails_id) references moviedetails(id)
 );
 
 create table review(
 id int unsigned not null auto_increment primary key,
 review_text varchar(300),
 user_id int unsigned not null,
-movie_id int unsigned not null,
+moviedetails_id int unsigned not null,
 foreign key(user_id) references user(id),
-foreign key(movie_id) references movie(id)
+foreign key(moviedetails_id) references moviedetails(id)
 );
 
 create table vote(
@@ -53,12 +59,12 @@ insert into user(username,password) values("3","FeedTown123");
 
 insert into admin(user_id) values(1);
 
-insert into movie(name,description) values("Avatar","Blue people fighting");
-insert into movie(name,description) values("Kill Bill","Bill needs to die");
-insert into movie(name,description) values("Harry Potter","A boy who likes magic");
+insert into moviedetails(name,description) values("Avatar","Blue people fighting");
+insert into moviedetails(name,description) values("Kill Bill","Bill needs to die");
+insert into moviedetails(name,description) values("Harry Potter","A boy who likes magic");
 
-insert into review(review_text,user_id,movie_id) values("random movie, so bad why even make this shit",2,1);
-insert into review(review_text,user_id,movie_id) values("Bästa filmen bror",2,2);
+insert into review(review_text,user_id,moviedetails_id) values("random movie, so bad why even make this shit",2,1);
+insert into review(review_text,user_id,moviedetails_id) values("Bästa filmen bror",2,2);
 
 
 insert into vote(vote_type,user_id) values(1,4);
@@ -68,3 +74,6 @@ insert into vote(vote_type,user_id) values(1,1);
 
 insert into review_vote(review_id, vote_id) values (1,1);
 insert into review_vote(review_id, vote_id) values (1,2);
+
+insert into genre(name, moviedetails_id) values ("Aniamtion",1);
+insert into genre(name, moviedetails_id) values ("Comedy",1)

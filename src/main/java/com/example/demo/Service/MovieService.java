@@ -1,6 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entites.Movie;
+import com.example.demo.Entites.Moviedetails;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MovieService {
     
     void addMovie();
-    Movie findMovieById(long movieid);
-    List<Movie> getAllMovies();
+    Moviedetails findMovieById(long movieid);
+    List<Moviedetails> getAllMovies();
 }
