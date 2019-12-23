@@ -59,18 +59,7 @@ public class HomeController {
     
     @RequestMapping("/")
     public List<Movie> home() {
-//        Moviedetails movieDetails = moviedetailsService.findMovieById(1);
-//        
-//        List<String> genreStringList =  new ArrayList<>();
-//        
-//        for(Genre g: genreService.getGenresForMovie(movieDetails)){
-//            genreStringList.add(g.getName());
-//        }
-//        
-//        Movie movie = new Movie(movieDetails);
-//        movie.setGenreList(genreStringList);
-//    
-//        return movie;
+
         return movieService.getAllMovies();
     }
 
