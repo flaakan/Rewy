@@ -28,8 +28,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> getGenresForMovie(Moviedetails movie) {
-        return genreRepository.findGenreById(movie.getId());
+    public List<Genre> getGenresForMovie(Moviedetails moviedetails) {
+        return genreRepository.findGenreById(moviedetails.getId());
     }
 
 }

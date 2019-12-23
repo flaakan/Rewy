@@ -11,6 +11,7 @@ import com.example.demo.Entites.User;
 import com.example.demo.Entites.ReviewVote;
 import com.example.demo.Entites.Vote;
 import com.example.demo.Service.GenreService;
+import com.example.demo.Service.MovieService;
 import com.example.demo.Service.ReviewService;
 import com.example.demo.Service.ReviewVoteService;
 import com.example.demo.Service.VoteService;
@@ -26,51 +27,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Service.MoviedetailsService;
+
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class HomeController {
 
     private final UserService userService;
     private final MovieService movieService;
+    private final MoviedetailsService moviedetailsService;
     private final AdminService adminService;
     private final ReviewVoteService reviewVoteService;
     private final VoteService voteService;
     private final ReviewService reviewService;
     private final GenreService genreService;
-    
+
 
     @Autowired
-    public HomeController(UserService userService, MovieService movieService, AdminService adminService,
-            ReviewVoteService reviewVoteService, ReviewService reviewService, VoteService voteService,GenreService genreService ) {
+    public HomeController(UserService userService, MoviedetailsService moviedetailsService, AdminService adminService,
+            ReviewVoteService reviewVoteService, ReviewService reviewService, VoteService voteService,GenreService genreService,MovieService movieService) {
         this.userService = userService;
-        this.movieService = movieService;
+        this.moviedetailsService = moviedetailsService;
         this.adminService = adminService;
         this.reviewVoteService = reviewVoteService;
         this.voteService = voteService;
         this.reviewService = reviewService;
         this.genreService = genreService;
+        this.movieService = movieService;
     }
-
+    
     @RequestMapping("/")
-    public Movie home() {
-        Moviedetails movieDetails = movieService.findMovieById(1);
-        
-        List<String> genreStringList =  new ArrayList<>();
-        
-        for(Genre g: genreService.getGenresForMovie(movieDetails)){
-            genreStringList.add(g.getName());
-        }
-        
-        Movie movie = new Movie(movieDetails);
-        movie.setGenreList(genreStringList);
-
-        return movie;
-    }
-
-    @RequestMapping("/welcome")
-    public List<Moviedetails> getAllMovies() {
+    public List<Movie> home() {
+//        Moviedetails movieDetails = moviedetailsService.findMovieById(1);
+//        
+//        List<String> genreStringList =  new ArrayList<>();
+//        
+//        for(Genre g: genreService.getGenresForMovie(movieDetails)){
+//            genreStringList.add(g.getName());
+//        }
+//        
+//        Movie movie = new Movie(movieDetails);
+//        movie.setGenreList(genreStringList);
+//    
+//        return movie;
         return movieService.getAllMovies();
     }
+
 
     @RequestMapping("/admindelete")
     public String AdminDelete() {
@@ -93,9 +96,9 @@ public class HomeController {
     @RequestMapping("/addreviewvote")
     public String addreviewvote() {
         Review review = reviewService.findReviewById(2);
-        System.out.println(review.toString());
+
         Vote vote = voteService.findVoteById(3);
-        System.out.println(vote.toString());
+        
         ReviewVote rv = new ReviewVote();
         rv.setReview(review);
         rv.setVote(vote);
@@ -106,6 +109,7 @@ public class HomeController {
 
     @RequestMapping("/user")
     public Optional<User> getUser() {
+
         return userService.findUserById(1);
     }
 
@@ -142,8 +146,10 @@ public class HomeController {
         return adminService.getAdminByUserId(1);
     }
 
-    @RequestMapping("/movie")
-    public Moviedetails movie() {
-        return movieService.findMovieById(1);
+
+    @RequestMapping("/movies")
+    public List<Movie> movie() {
+        return movieService.getAllMovies();
+
     }
 }

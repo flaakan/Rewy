@@ -21,6 +21,12 @@ name varchar(45),
 description varchar (300),
 rating double default 0
 );
+create table actor(
+id int unsigned not null auto_increment primary key,
+name varchar(45),
+moviedetails_id int unsigned not null,
+foreign key(moviedetails_id) references moviedetails(id)
+);
 create table genre(
 id int unsigned not null auto_increment primary key,
 name varchar(45),
