@@ -20,11 +20,9 @@ public class Movie {
 
     public Movie() {
     }
-
     
     public Movie(Moviedetails movie) {
         this.movie = movie;
-      
     }
 
     public Moviedetails getMovie() {

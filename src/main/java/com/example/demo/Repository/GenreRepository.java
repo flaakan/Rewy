@@ -15,5 +15,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface GenreRepository extends JpaRepository<Genre,Long> {
 
        @Query("from Genre where moviedetails_id = ?1")
-    List<Genre> findGenreById(long movieid);
+    List<Genre> findGenreById(long moviedetails_id);
 }
