@@ -4,15 +4,11 @@ import com.example.demo.Entites.Admin;
 import com.example.demo.Entites.Movie;
 import com.example.demo.Entites.Review;
 import com.example.demo.Repository.MovieRepository;
-import com.example.demo.Service.UserService;
-import com.example.demo.Service.AdminService;
-import com.example.demo.Service.MovieService;
+import com.example.demo.Service.*;
 import com.example.demo.Entites.User;
 import com.example.demo.Entites.ReviewVote;
 import com.example.demo.Entites.Vote;
-import com.example.demo.Service.ReviewService;
-import com.example.demo.Service.ReviewVoteService;
-import com.example.demo.Service.VoteService;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -115,6 +111,12 @@ public class HomeController {
     
     @RequestMapping("/user/{userid}")
     public User getUser(@PathVariable(value = "userid")long userId) {
+
+        Crypto decPass = new PasswordCrypto();
+        String dec = new String(decPass.decrypt(userService.findUserById(userId).getPassword().getBytes()));
+
+        System.out.println("Password decoded: " + dec);
+
         return userService.findUserById(userId);
     }
     
@@ -126,8 +128,15 @@ public class HomeController {
     
     @RequestMapping("/registration/{username}/{password}")
     public String registration(@PathVariable(value = "username") String username, @PathVariable(value = "password") String password){
-        userService.registerUser(new User(username,password));
-        return "registered";
+        Crypto encPassword = new PasswordCrypto();
+
+        String enc = new String(encPassword.encrypt(password.getBytes()));
+        System.out.println(enc);
+        String dec = new String(encPassword.decrypt(enc.getBytes()));
+        System.out.println(dec);
+
+        userService.registerUser(new User(username,enc));
+        return "registered : \nUser : " + username + "\npass " + enc + "\n (Decoded password : " + dec;
     }
     
     @PostMapping("/registration")
