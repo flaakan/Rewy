@@ -1,6 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entites.Movie;
+import com.example.demo.Entites.Moviedetails;
 import com.example.demo.Entites.Review;
 import com.example.demo.Entites.User;
 import com.example.demo.Repository.ReviewRepository;
@@ -17,7 +17,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getAllReviewsForMovie(Movie movie) {
+    public List<Review> getAllReviewsForMovie(Moviedetails movie) {
         return reviewRepository.getAllReviewsByMovieId(movie.getId());
     }
 

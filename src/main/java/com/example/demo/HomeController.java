@@ -1,58 +1,47 @@
 package com.example.demo;
 
 import com.example.demo.Entites.Admin;
-import com.example.demo.Entites.Movie;
 import com.example.demo.Entites.Review;
-import com.example.demo.Repository.MovieRepository;
 import com.example.demo.Service.*;
 import com.example.demo.Entites.User;
 import com.example.demo.Entites.ReviewVote;
 import com.example.demo.Entites.Vote;
-
+import com.example.demo.Service.MovieService;
+import com.example.demo.model.Movie;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class HomeController {
+
     private final UserService userService;
     private final MovieService movieService;
+    private final MoviedetailsService moviedetailsService;
     private final AdminService adminService;
     private final ReviewVoteService reviewVoteService;
     private final VoteService voteService;
     private final ReviewService reviewService;
+    private final GenreService genreService;
+
 
     @Autowired
-    MovieRepository movieRepository;
-    
-    @Autowired
-    public HomeController(UserService userService,MovieService movieService,AdminService adminService,
-            ReviewVoteService reviewVoteService,ReviewService reviewService, VoteService voteService){
+    public HomeController(UserService userService, MoviedetailsService moviedetailsService, AdminService adminService,
+                          ReviewVoteService reviewVoteService, ReviewService reviewService, VoteService voteService,GenreService genreService,MovieService movieService) {
         this.userService = userService;
-        this.movieService = movieService;
+        this.moviedetailsService = moviedetailsService;
         this.adminService = adminService;
         this.reviewVoteService = reviewVoteService;
         this.voteService = voteService;
         this.reviewService = reviewService;
+        this.genreService = genreService;
+        this.movieService = movieService;
     }
-    
-    @RequestMapping("/home")
-    public List<Movie> home(){
-        /* userService.registerUser(new User("Faker","Fakerfaker"));
-        userService.registerUser(new User("1","123123123"));
-        userService.registerUser(new User("Dsadad","123123123"));
-        userService.updateUserName(3,"SaikatTheFeeder");
-        movieService.addMovie();
-        adminService.createAdmin(userService.findUserById(3));
-     if(adminService.checkIfAdmin(userService.findUserById(1).getId()))
-            return "User is admin";
-       else
-            return "welcome to Rewy";*/
-       return movieRepository.findAll();
 
-    }
 
     @RequestMapping("/login/{username}/{password}")
     public String loginPage(@PathVariable(value = "username")String username, @PathVariable(value = "password") String password)
@@ -77,55 +66,64 @@ public class HomeController {
 
         return outPut;
     }
-    
+
+    @RequestMapping("/")
+    public List<Movie> home() {
+
+        return movieService.getAllMovies();
+    }
+
+
     @RequestMapping("/admindelete")
-    public String AdminDelete(){
+    public String AdminDelete() {
         adminService.deleteAdmin(userService.findUserById(1));
         return "admin deleted";
     }
-    @RequestMapping("/allvotes")
-    public List<Vote> allvotes(){
-     return voteService.getAllVotes();
-    }
-    
-    @RequestMapping("/allreviews")
-    public List<Review> allreviews(){
-    System.out.println("hello from homecontroller");
 
-     return reviewService.getAllReviews();
+    @RequestMapping("/allvotes")
+    public List<Vote> allvotes() {
+        return voteService.getAllVotes();
     }
-    
+
+    @RequestMapping("/allreviews")
+    public List<Review> allreviews() {
+        System.out.println("hello from homecontroller");
+
+        return reviewService.getAllReviews();
+    }
+
     @RequestMapping("/addreviewvote")
-    public String addreviewvote(){
+    public String addreviewvote() {
         Review review = reviewService.findReviewById(2);
-        System.out.println(review.toString());
-        Vote vote  = voteService.findVoteById(3);
-        System.out.println(vote.toString());
+
+        Vote vote = voteService.findVoteById(3);
+
         ReviewVote rv = new ReviewVote();
         rv.setReview(review);
         rv.setVote(vote);
         reviewVoteService.addReviewVote(rv);
-        
+
         return "added reviewvote";
     }
-    
-    @RequestMapping("/user/{userid}")
-    public User getUser(@PathVariable(value = "userid")long userId) {
 
-        Crypto decPass = new PasswordCrypto();
-        String dec = new String(decPass.decrypt(userService.findUserById(userId).getPassword().getBytes()));
+    @RequestMapping("/user")
+    public Optional<User> getUser() {
 
-        System.out.println("Password decoded: " + dec);
-
-        return userService.findUserById(userId);
+        return userService.findUserById(1);
     }
-    
+
     @RequestMapping("/allreviewvotes")
-    public List<ReviewVote> allreviewVotes(){
+    public List<ReviewVote> allreviewVotes() {
         System.out.println(reviewVoteService.getAllReviewVotes());
         return reviewVoteService.getAllReviewVotes();
     }
-    
+
+   /* @RequestMapping("/registration")
+    public String registration() {
+        userService.registerUser(new User("Flakan", "Flakan123"));
+        return "registered";
+    }*/
+
     @RequestMapping("/registration/{username}/{password}")
     public String registration(@PathVariable(value = "username") String username, @PathVariable(value = "password") String password){
         Crypto encPassword = new PasswordCrypto();
@@ -138,30 +136,33 @@ public class HomeController {
         userService.registerUser(new User(username,enc));
         return "registered : \nUser : " + username + "\npass " + enc + "\n (Decoded password : " + dec;
     }
-    
+
     @PostMapping("/registration")
     ResponseEntity<User> postRegister(@RequestBody User user) {
         return ResponseEntity.ok(userService.registerUser(user));
     }
-    
+
     @PostMapping("/login")
     ResponseEntity<User> postLogin(@RequestBody User user) {
-
+        System.out.println("user är skapad" + user.getUsername());
         return ResponseEntity.ok(userService.getLoginUser(user));
     }
-    
+
     @RequestMapping("/exists")
-    public boolean UserExists(){
+    public boolean UserExists() {
         return userService.CheckUser("Flakanärbäst");
     }
-    
+
     @RequestMapping("/getadmin")
-    public Admin getadmin(){
+    public Admin getadmin() {
         return adminService.getAdminByUserId(1);
     }
 
-    @RequestMapping("/movie")
-    public Movie movie(){
-        return movieService.findMovieById(1);
+
+    @RequestMapping("/movies")
+    public List<Movie> movie() {
+        return movieService.getAllMovies();
+
     }
 }
+

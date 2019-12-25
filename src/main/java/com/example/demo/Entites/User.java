@@ -20,7 +20,7 @@ public class User {
 
     private String username;
     private String password;
-    
+
     @Column(name = "created")
     private String created;
 
@@ -67,3 +67,4 @@ public class User {
     }
 
 }
+

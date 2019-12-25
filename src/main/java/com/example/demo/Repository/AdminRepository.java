@@ -14,5 +14,5 @@ public interface AdminRepository extends JpaRepository<Admin,Long> {
 
     @Query("from Admin where user_id = ?1")
     Admin getAdminByUserId(long userid);
-
+    
 }

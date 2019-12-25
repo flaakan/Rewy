@@ -1,13 +1,14 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entites.Movie;
+
+import com.example.demo.model.Movie;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface MovieService {
-    
-    void addMovie();
-    Movie findMovieById(long movieid);
+
     List<Movie> getAllMovies();
+    
 }
+

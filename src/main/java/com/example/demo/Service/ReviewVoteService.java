@@ -13,3 +13,4 @@ public interface ReviewVoteService {
 
     public void addReviewVote(ReviewVote rv);
 }
+

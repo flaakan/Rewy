@@ -26,3 +26,4 @@ public interface ReviewVoteRepository extends JpaRepository<ReviewVote, Long> {
     
 
 }
+

@@ -5,7 +5,7 @@
  */
 package com.example.demo.Repository;
 
-import com.example.demo.Entites.Movie;
+import com.example.demo.Entites.Moviedetails;
 import com.example.demo.Entites.Review;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> getAllReviewsByUserId(long userid);
 
     // Gets all reviews for a Movie
-    @Query("from Review where movie_id = ?1")
+    @Query("from Review where moviedetails_id = ?1")
     List<Review> getAllReviewsByMovieId(long movieid);
+    
+    @Query("from Review where id = ?1")
+    Review findReviewById(long reviewid);
+
 
 }
+

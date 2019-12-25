@@ -3,6 +3,7 @@ package com.example.demo.Service;
 import com.example.demo.Entites.User;
 import com.example.demo.Repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,10 @@ public class UserServiceImpl implements UserService {
      * @return User
      */
     @Override
-    public User findUserById(long userid) {
-        return userRepository.findUserById(userid);
+    public Optional<User> findUserById(long userid) {
+        return userRepository.findById(userid);
     }
+    
 
     /**
      *
@@ -100,17 +102,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getLoginUser(User user) {
-        /*
-        List<User> users = getAllUsers();
-        for(User u : users){
-            if(u.getUsername().equalsIgnoreCase(user.getUsername())&& u.getPassword().equals(user.getPassword())){
-                setUser(user);
-                return user;
-            }        
-        }*/
-
-        // Den här borde vara bättre eftersom den letar bara efter en o inte hela listan av users
-        // Den checkar om lösenordet matchar om det finns en user o skickar tillbaka usern från databasen.
         User DBuser = userRepository.findUserByUsername(user.getUsername());
         if (DBuser != null) {
             if (DBuser.getPassword().equals(user.getPassword())) {
