@@ -136,9 +136,8 @@ public class HomeController {
     }
 
 
-    @RequestMapping("/movies")
-    public List<Movie> movie() {
+    @RequestMapping ("/movies")
+    public List<Movie> movies(){
         return movieService.getAllMovies();
-
     }
 }
