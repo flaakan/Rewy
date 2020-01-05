@@ -17,6 +17,7 @@ public class Movie {
     
     Moviedetails movie;
     List <String> GenreList;
+    List <String> ActorList;
 
     public Movie() {
     }
@@ -40,5 +41,12 @@ public class Movie {
     public void setGenreList(List<String> GenreList) {
         this.GenreList = GenreList;
     }
-    
+
+    public List<String> getActorList() {
+        return ActorList;
+    }
+
+    public void setActorList(List<String> actorList) {
+        ActorList = actorList;
+    }
 }

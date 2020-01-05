@@ -1,7 +1,9 @@
 package com.example.demo.Service;
 
+import com.example.demo.Entites.Actor;
 import com.example.demo.Entites.Genre;
 import com.example.demo.Entites.Moviedetails;
+import com.example.demo.Repository.ActorRepository;
 import com.example.demo.Repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,30 +15,30 @@ import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService{
- 
 
     private final MoviedetailsRepository moviedetailsRepository;
     private final GenreRepository genreRepository;
     private final GenreService genreService;
-    
+    private final ActorRepository actorRepository;
+    private final ActorService actorService;
+    private List<Movie> movieDetails;
     
     @Autowired
-    
-    public MovieServiceImpl(MoviedetailsRepository moviedetailsRepository, GenreRepository genreRepository, GenreService genreService) {
+    public MovieServiceImpl(MoviedetailsRepository moviedetailsRepository, GenreRepository genreRepository, GenreService genreService, ActorRepository actorRepository, ActorService actorService) {
     this.moviedetailsRepository = moviedetailsRepository;
     this.genreRepository = genreRepository;
     this.genreService = genreService;
+    this.actorRepository = actorRepository;
+    this.actorService = actorService;
     }
 
     @Override
     public List<Movie> getAllMovies() {
         
         List<Movie> moviesAndGenreList = new ArrayList<>();
-        
-        List <Genre> allGenres = genreRepository.findAll();
+        //List <Genre> allGenres = genreRepository.findAll();
         List <Moviedetails> allMoviedetails = moviedetailsRepository.findAll();
-        
-        
+
         for(Moviedetails md: allMoviedetails){
             Movie movie = new Movie(md);
             List<String> genreStringList =  new ArrayList<>();
@@ -49,11 +51,38 @@ public class MovieServiceImpl implements MovieService{
             movie.setGenreList(genreStringList);
             moviesAndGenreList.add(movie);
 
-        }   
+        }
+
+        movieDetails = moviesAndGenreList;
 
           
-    return moviesAndGenreList;
+    return movieDetails;
     }
-    
-    
+
+    @Override
+    public List<Movie> getMoviesWithActors() {
+        List<Movie> moviesAndActorList = new ArrayList<>();
+        //List <Actor> allActors = actorRepository.findAll();
+        List <Moviedetails> allMoviedetails = moviedetailsRepository.findAll();
+
+        for(Moviedetails md: allMoviedetails){
+            Movie movie = new Movie(md);
+            List<String> actorStringList =  new ArrayList<>();
+
+            for(Actor a: actorService.getActorsForMovies(md)){
+
+                actorStringList.add(a.getName());
+            }
+
+            movie.setActorList(actorStringList);
+            moviesAndActorList.add(movie);
+
+        }
+
+        movieDetails = moviesAndActorList;
+
+        return movieDetails;
+    }
+
+
 }

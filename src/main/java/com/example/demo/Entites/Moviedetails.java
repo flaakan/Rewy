@@ -16,7 +16,10 @@ public class Moviedetails {
     private Long id;
     private String name;
     private String description;
-    private float rating;  
+    private String poster;
+    private double imdb;
+    private double rotten_tomatoes;
+    private float rewy;
     
     public Moviedetails(){
         
@@ -50,12 +53,36 @@ public class Moviedetails {
         this.description = description;
     }
 
-    public float getRating() {
-        return rating;
+    public String getPoster() {
+        return poster;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public double getImdb() {
+        return imdb;
+    }
+
+    public void setImdb(double imdb) {
+        this.imdb = imdb;
+    }
+
+    public double getRotten_tomatoes() {
+        return rotten_tomatoes;
+    }
+
+    public void setRotten_tomatoes(double rotten_tomatoes) {
+        this.rotten_tomatoes = rotten_tomatoes;
+    }
+
+    public float getRewy() {
+        return rewy;
+    }
+
+    public void setRewy(float rewy) {
+        this.rewy = rewy;
     }
     
     
