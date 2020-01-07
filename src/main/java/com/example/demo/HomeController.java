@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Service.MoviedetailsService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -141,8 +142,8 @@ public class HomeController {
         return movieService.getAllMovies();
     }
     
-        @RequestMapping ("/movie")
-    public Moviedetails movie(){
-        return moviedetailsService.findMovieById(1);
+        @RequestMapping ("/movie/{id}")
+    public Movie movie(@PathVariable long id){
+        return movieService.getOneMovie(id);
     }
 }
