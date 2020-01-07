@@ -22,3 +22,4 @@ public interface VoteRepository extends JpaRepository<Vote,Long> {
     Vote findVoteByVoteType(int votetype);
     
 }
+

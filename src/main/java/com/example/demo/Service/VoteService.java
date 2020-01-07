@@ -1,4 +1,3 @@
-
 package com.example.demo.Service;
 
 import com.example.demo.Entites.Vote;

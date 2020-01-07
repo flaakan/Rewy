@@ -140,4 +140,9 @@ public class HomeController {
     public List<Movie> movies(){
         return movieService.getAllMovies();
     }
+    
+        @RequestMapping ("/movie")
+    public Moviedetails movie(){
+        return moviedetailsService.findMovieById(1);
+    }
 }
