@@ -12,77 +12,91 @@ import com.example.demo.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl implements MovieService {
 
     private final MoviedetailsRepository moviedetailsRepository;
     private final GenreRepository genreRepository;
     private final GenreService genreService;
     private final ActorRepository actorRepository;
     private final ActorService actorService;
-    private List<Movie> movieDetails;
-    
+
     @Autowired
     public MovieServiceImpl(MoviedetailsRepository moviedetailsRepository, GenreRepository genreRepository, GenreService genreService, ActorRepository actorRepository, ActorService actorService) {
-    this.moviedetailsRepository = moviedetailsRepository;
-    this.genreRepository = genreRepository;
-    this.genreService = genreService;
-    this.actorRepository = actorRepository;
-    this.actorService = actorService;
+        this.moviedetailsRepository = moviedetailsRepository;
+        this.genreRepository = genreRepository;
+        this.genreService = genreService;
+        this.actorRepository = actorRepository;
+        this.actorService = actorService;
     }
 
     @Override
     public List<Movie> getAllMovies() {
-        
+
         List<Movie> moviesAndGenreList = new ArrayList<>();
         //List <Genre> allGenres = genreRepository.findAll();
-        List <Moviedetails> allMoviedetails = moviedetailsRepository.findAll();
+        List<Moviedetails> allMoviedetails = moviedetailsRepository.findAll();
 
-        for(Moviedetails md: allMoviedetails){
+        for (Moviedetails md : allMoviedetails) {
             Movie movie = new Movie(md);
-            List<String> genreStringList =  new ArrayList<>();
-            
-            for(Genre g: genreService.getGenresForMovie(md)){
-               
+            List<String> genreStringList = new ArrayList<>();
+
+            for (Genre g : genreService.getGenresForMovie(md)) {
+
                 genreStringList.add(g.getName());
             }
-            
+
             movie.setGenreList(genreStringList);
             moviesAndGenreList.add(movie);
 
         }
 
-        movieDetails = moviesAndGenreList;
+        return moviesAndGenreList;
 
-          
-    return movieDetails;
     }
 
     @Override
     public List<Movie> getMoviesWithActors() {
         List<Movie> moviesAndActorList = new ArrayList<>();
         //List <Actor> allActors = actorRepository.findAll();
-        List <Moviedetails> allMoviedetails = moviedetailsRepository.findAll();
+        List<Moviedetails> allMoviedetails = moviedetailsRepository.findAll();
 
-        for(Moviedetails md: allMoviedetails){
+        for (Moviedetails md : allMoviedetails) {
             Movie movie = new Movie(md);
-            List<String> actorStringList =  new ArrayList<>();
+            List<String> actorStringList = new ArrayList<>();
 
-            for(Actor a: actorService.getActorsForMovies(md)){
+            for (Actor a : actorService.getActorsForMovies(md)) {
 
                 actorStringList.add(a.getName());
             }
-
             movie.setActorList(actorStringList);
             moviesAndActorList.add(movie);
 
         }
-
-        movieDetails = moviesAndActorList;
-
-        return movieDetails;
+        return moviesAndActorList;
     }
 
+    @Override
+    public Movie getOneMovie(long id) {
+        Moviedetails mvd = moviedetailsRepository.findMovieById(id);
+        Movie movie = new Movie(mvd);
+
+        List<String> genreStringList = new ArrayList<>();
+        
+        for (Genre g : genreService.getGenresForMovie(mvd)) {
+            genreStringList.add(g.getName());
+        }
+        movie.setGenreList(genreStringList);
+        
+        
+        List<String> actorStringList = new ArrayList<>();
+
+        for (Actor a : actorService.getActorsForMovies(mvd)) {
+           actorStringList.add(a.getName());
+        }
+        movie.setActorList(actorStringList);
+        
+        return movie;
+    }
 
 }
