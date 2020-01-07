@@ -1,18 +1,33 @@
 package com.example.demo;
 
 import com.example.demo.Entites.Admin;
+import com.example.demo.Entites.Genre;
+import com.example.demo.Entites.Moviedetails;
 import com.example.demo.Entites.Review;
-import com.example.demo.Service.*;
+import com.example.demo.Service.UserService;
+import com.example.demo.Service.AdminService;
+import com.example.demo.Service.MovieService;
 import com.example.demo.Entites.User;
 import com.example.demo.Entites.ReviewVote;
 import com.example.demo.Entites.Vote;
+import com.example.demo.Service.GenreService;
 import com.example.demo.Service.MovieService;
+import com.example.demo.Service.ReviewService;
+import com.example.demo.Service.ReviewVoteService;
+import com.example.demo.Service.VoteService;
 import com.example.demo.model.Movie;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.Service.MoviedetailsService;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,7 +46,7 @@ public class HomeController {
 
     @Autowired
     public HomeController(UserService userService, MoviedetailsService moviedetailsService, AdminService adminService,
-                          ReviewVoteService reviewVoteService, ReviewService reviewService, VoteService voteService,GenreService genreService,MovieService movieService) {
+            ReviewVoteService reviewVoteService, ReviewService reviewService, VoteService voteService,GenreService genreService,MovieService movieService) {
         this.userService = userService;
         this.moviedetailsService = moviedetailsService;
         this.adminService = adminService;
@@ -41,32 +56,7 @@ public class HomeController {
         this.genreService = genreService;
         this.movieService = movieService;
     }
-
-
-    @RequestMapping("/login/{username}/{password}")
-    public String loginPage(@PathVariable(value = "username")String username, @PathVariable(value = "password") String password)
-    {
-        String outPut = "";
-
-        if(userService.CheckUser(username) && userService.findUserByUsername(username).getPassword().equals(password))
-        {
-            outPut = "The user: " + username + " exits on the database. ";
-            if(adminService.checkIfAdmin(userService.findUserByUsername(username).getId()))
-            {
-                outPut = outPut + ". The user is admin.";
-            }
-            else
-            {
-                outPut = outPut + ". The user is member.";
-            }
-        }
-        else {
-            outPut = "The user: " + username + " doesn't exits on the database";
-        }
-
-        return outPut;
-    }
-
+    
     @RequestMapping("/")
     public List<Movie> home() {
 
@@ -97,7 +87,7 @@ public class HomeController {
         Review review = reviewService.findReviewById(2);
 
         Vote vote = voteService.findVoteById(3);
-
+        
         ReviewVote rv = new ReviewVote();
         rv.setReview(review);
         rv.setVote(vote);
@@ -118,23 +108,10 @@ public class HomeController {
         return reviewVoteService.getAllReviewVotes();
     }
 
-   /* @RequestMapping("/registration")
+    @RequestMapping("/registration")
     public String registration() {
         userService.registerUser(new User("Flakan", "Flakan123"));
         return "registered";
-    }*/
-
-    @RequestMapping("/registration/{username}/{password}")
-    public String registration(@PathVariable(value = "username") String username, @PathVariable(value = "password") String password){
-        Crypto encPassword = new PasswordCrypto();
-
-        String enc = new String(encPassword.encrypt(password.getBytes()));
-        System.out.println(enc);
-        String dec = new String(encPassword.decrypt(enc.getBytes()));
-        System.out.println(dec);
-
-        userService.registerUser(new User(username,enc));
-        return "registered : \nUser : " + username + "\npass " + enc + "\n (Decoded password : " + dec;
     }
 
     @PostMapping("/registration")
@@ -159,9 +136,8 @@ public class HomeController {
     }
 
 
-    @RequestMapping("/movies")
-    public List<Movie> movie() {
-        return movieService.getMoviesWithActors();
+    @RequestMapping ("/movies")
+    public List<Movie> movies(){
+        return movieService.getAllMovies();
     }
 }
-
