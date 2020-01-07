@@ -1,13 +1,12 @@
 package com.example.demo.Entites;
 
-import com.example.demo.Entites.Vote;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -27,8 +26,8 @@ public class Review {
     private Moviedetails movie;
 
     //Måste disskutera hur vi gör med votes. 
-    
-    
+
+
     private String reviewText;
 
     public Long getId() {

@@ -10,7 +10,7 @@ created timestamp DEFAULT current_timestamp
 );
 
 create table admin(
-	id int unsigned not null auto_increment primary key,
+id int unsigned not null auto_increment primary key,
 user_id int unsigned not null,
 foreign key(user_id) references user(id)
 );
@@ -19,8 +19,12 @@ create table moviedetails(
 id int unsigned not null auto_increment primary key,
 name varchar(45),
 description varchar (300),
-rating double default 0
+poster varchar(100),
+imdb double default 0,
+rotten_tomatoes decimal(5,2),
+rewy double default 0
 );
+
 create table actor(
 id int unsigned not null auto_increment primary key,
 name varchar(45),
@@ -82,4 +86,11 @@ insert into review_vote(review_id, vote_id) values (1,1);
 insert into review_vote(review_id, vote_id) values (1,2);
 
 insert into genre(name, moviedetails_id) values ("Aniamtion",1);
-insert into genre(name, moviedetails_id) values ("Comedy",1)
+insert into genre(name, moviedetails_id) values ("Comedy",1);
+
+insert into actor(name, moviedetails_id) values ("Sam Worthington", 3);
+
+
+update moviedetails set poster = "poster for avatar", imdb = 7.8, rotten_tomatoes = 82 where id = 1;
+update moviedetails set poster = "poster for Kill Bill", imdb = 8.1, rotten_tomatoes = 85 where id = 2;
+update moviedetails set poster = "poster for Harry Potter", imdb = 7.6, rotten_tomatoes = 81 where id = 3;

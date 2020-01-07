@@ -14,7 +14,7 @@ public class AdminServiceImpl implements AdminService {
 
     AdminRepository adminRepository;
     UserRepository userRepository;
-    
+
     @Autowired
     public AdminServiceImpl(final AdminRepository adminRepository, UserRepository userRepository) {
         this.adminRepository = adminRepository;
@@ -35,18 +35,18 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void createAdmin(User user) {
         if(getAdminByUserId(user.getId()) == null){
-            adminRepository.save(new Admin(user)); 
-         }
-        
+            adminRepository.save(new Admin(user));
+        }
+
     }
 
     @Override
     public void deleteAdmin(Optional <User> user) {
-       Admin adminToDelete = getAdminByUserId(user.get().getId());
-       if(adminToDelete != null){
-        adminRepository.delete(adminToDelete);
-        userRepository.delete(user.get());
-       }
-        
+        Admin adminToDelete = getAdminByUserId(user.get().getId());
+        if(adminToDelete != null){
+            adminRepository.delete(adminToDelete);
+            userRepository.delete(user.get());
+        }
+
     }
 }
