@@ -9,5 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MovieService {
 
     List<Movie> getAllMovies();
-    
+    List<Movie> getMoviesWithActors();
+    Movie getOneMovie(long id);
 }
+

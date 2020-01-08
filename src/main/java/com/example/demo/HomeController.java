@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Service.MoviedetailsService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -108,11 +109,6 @@ public class HomeController {
         return reviewVoteService.getAllReviewVotes();
     }
 
-    @RequestMapping("/registration")
-    public String registration() {
-        userService.registerUser(new User("Flakan", "Flakan123"));
-        return "registered";
-    }
 
     @PostMapping("/registration")
     ResponseEntity<User> postRegister(@RequestBody User user) {
@@ -121,7 +117,6 @@ public class HomeController {
 
     @PostMapping("/login")
     ResponseEntity<User> postLogin(@RequestBody User user) {
-        System.out.println("user är skapad" + user.getUsername());
         return ResponseEntity.ok(userService.getLoginUser(user));
     }
 
@@ -136,9 +131,18 @@ public class HomeController {
     }
 
 
-    @RequestMapping("/movies")
-    public List<Movie> movie() {
+    @RequestMapping ("/movies")
+    public List<Movie> movies(){
         return movieService.getAllMovies();
-
+    }
+    
+        @RequestMapping ("/movie/{id}")
+    public Movie movie(@PathVariable long id){
+        return movieService.getOneMovie(id);
+    }
+    
+    @RequestMapping ("/reviews/{id}")
+    public List<Review> allReviewsForMovie(@PathVariable long id){
+        return reviewService.getAllReviewsForMovie(id);
     }
 }

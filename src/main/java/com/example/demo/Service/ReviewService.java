@@ -9,9 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface ReviewService {
     
-    List<Review> getAllReviewsForMovie(Moviedetails movie);
+    List<Review> getAllReviewsForMovie(long id);
     List<Review> getAllReviewsForUser(User user);
     List<Review>getAllReviews();
     void addReview(Review review);
     Review findReviewById(long id);
 }
+
