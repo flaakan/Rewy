@@ -109,11 +109,6 @@ public class HomeController {
         return reviewVoteService.getAllReviewVotes();
     }
 
-    @RequestMapping("/registration")
-    public String registration() {
-        userService.registerUser(new User("Flakan", "Flakan123"));
-        return "registered";
-    }
 
     @PostMapping("/registration")
     ResponseEntity<User> postRegister(@RequestBody User user) {
@@ -122,7 +117,6 @@ public class HomeController {
 
     @PostMapping("/login")
     ResponseEntity<User> postLogin(@RequestBody User user) {
-        System.out.println("user är skapad" + user.getUsername());
         return ResponseEntity.ok(userService.getLoginUser(user));
     }
 
@@ -145,5 +139,10 @@ public class HomeController {
         @RequestMapping ("/movie/{id}")
     public Movie movie(@PathVariable long id){
         return movieService.getOneMovie(id);
+    }
+    
+    @RequestMapping ("/reviews/{id}")
+    public List<Review> allReviewsForMovie(@PathVariable long id){
+        return reviewService.getAllReviewsForMovie(id);
     }
 }
