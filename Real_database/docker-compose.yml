@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rewy
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data:/var/lib/mysql:rw"
+    container_name: db
+
+  springboot:
+    image: app
+    ports:
+      - "8087:8080"
+    depends_on:
+     - mysql
+    container_name: springboot

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  mysql-dev:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rewytest
+    ports:
+      - "3308:3306"
+    volumes:
+      - "./my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data:/var/lib/mysql:rw"
+    container_name: testdb
+
+  springboottest:
+    image: testapp
+    ports:
+      - "8088:8080"
+    depends_on:
+     - mysql-dev
+    container_name: test_springboot
